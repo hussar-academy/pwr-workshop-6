@@ -1,55 +1,32 @@
-## Zadanie 1.
-Chcemy wyświetlić listę wszystkich Digów na stronie głównej.
+# Zadanie 1.
 
-Kroki:
+Rejestracja / Autentykacja użytkowników
 
-1. Utworzyć controller w API Railsowym `Api::DigsController` z akcją `index` oraz odpowiednio zmodyfikować `routes.rb`.
-2. Utworzyć controller w Angularze wykorzystujący serwisy: `$scope` oraz `$http`
-  - Hint: W controllerze utwórz zmienną `$scope.digs`, która początkowo będzie pustą tablicą.
-  - Hint: Wykorzystaj serwis `$http` aby wysłać request `GET` i wypełnij tę tablicę.
-3. Odpowiednio wypełnić `app/assets/templates/index.html.slim` wykorzystując dyrektywę `ng-repeat`.
+#### 1.1
+Na podstawie dokumentacji [BCrypt](https://github.com/codahale/bcrypt-ruby) dodaj moduł odpowiedzialny za autentykacje.
+Pamiętaj aby utworzyć migracje z polem `password_digest`. Sprwadź w konsoli czy wszystko działa jak należy. Nie zapomnij o walidacjach.
 
-## Zadanie 2.
-Chcemy zobaczyć ile punktów ma dany Dig i być w stanie na niego zagłosować.
+#### 1.2
+Stwórz railowsy kontroler `registrations_controller.rb`, odpowiedzialny za rejestracje nowych użytkowników.
+Widok `new.slim` umieszczamy w katalogu `app/views/registrations`. Nie zapomnij dodać odpowiednich wpisówch do `routes.rb`
 
-Kroki:
+#### 1.3
+Stwórz railowsy kontroler `sessions_controller.rb`, odpowiedzialny za logowanie i wylogowywaie użytkowników.
+Użyj do tego celu modelu `User`, zmiennej `session`,  widok `new.slim` umieszczamy w katalogu `app/views/sessions`.
+Nie zapomnij dodać odpowiednich wpisówch do `routes.rb`
 
-1. Dodanie akcji w controllerze Angularowym do wysłania odpowiedniej liczby punktów (+1 lub -1)
-  - Hint: Należy wykorzystać serwis `$http` aby wysłać request `POST`.
-2. Dodanie przycisków głosowania obok Diga.
-  - Przyciski powinny reagować na `ng-click` i wywoływać wcześniej utworzoną funkcję.
-3. Dodanie nowej akcji w controllerze Railsowym (na przykład `vote`) oraz odpowiednia zmiana `routes.rb`.
-  - Jako, że aktualnie nie mamy informacji o aktualnie zalogowanym użytkowniku, przypisz głos do losowego użytkownika.
-4. Zmodyfikowanie modelu Diga, żeby do swojego obiektu dołączał informację o tym ile posiada punktów.
-  - Hint: To powinno być zrobione przy wykorzystaniu reprezenterów, o których powiemy w przyszłości. Aktualnie możecie wykorzystać ten kawałek kodu: https://github.com/hussar-academy/pwr-workshop-3/blob/master/cheatsheet.md#ruby-on-rails (`def as_json`)
-5. Wyświetlenie punktów przy Digu.
+#### 1.4
+Zmodyfikuj `app/views/layouts/application.slim`, tak aby do Angularowej aplikacji wpuszczać tylko zalogowanych użytkowników.
 
-## Zadanie 3.
-Chcemy być w stanie tworzyć, usuwać i edytować Digi.
+Tip: aby mieć dostęp do zdefiniowanych metod z kontrolera w widoku użyj metody `helper_method`.
 
-Założenia:
+# Zadanie 2.
 
-- Pod listą wszystkich Digów powinien być formularz do tworzenia nowego Diga.
-- Do każdego wyświetlanego Diga dodaj dwa przyciski: `Edit` i `Destroy`.
-- Wciśnięcie przycisku `Edit` podmieni treść Diga na formularz edycji, wciśnięcie `Destroy` usunie Diga z listy i z bazy danych.
+#### 2.1
+Zrefaktoruj kontroller `api/digs_controller.rb`, tak aby nowe obiekty typu `Dig` i `Comment` były przypisane do zalogowanego usera.
+Użyj methody `current_user` oraz dostępnych asocjacji np. `current_user.digs.create(dig_params)`
 
-Proponowane kroki:
+#### 2.2
+Zabezpiecz API przed niepowołanym dostępem z zewnątrz. Tylko zalogowani użytkownicy powinni mieć dostęp do `http://localhost:3000/api/digs`.
 
-1. Dodać i wypełnić akcje `create`, `update` i `destroy` do controllera Railsowego. W `routes.rb` zamienić akcję `get` na `resources :digs`
-  - Przetestuj, czy ścieżki zostały utworzone poprawnie na przykład wykorzystując [Postmana](http://www.getpostman.com/).
-  - Metody w controllerach mogą korzystać z globalnej zmiennej `params` aby odczytywać dane wysyłane w formularzach.
-2. Dodanie tworzenia nowego Diga do controllera Angularowego.
-  - Hint: Należy użyć dodatkowej zmiennej, np. `$scope.newDig`, która będzie wykorzystywana w formularzu tworzenia.
-3. Dodanie formularza tworzenia nowego Diga
-  - Hint: Formularz musi wykorzystać dyrektywę `ng-submit` oraz mieć przycisk `input type="submit"`
-4. Dodanie edytowania do controllera Angularowego.
-  - Hint: Możesz utworzyć zmienną przechowującą ID aktualnie edytowanego Diga (domyślnie ustawioną na `null`).
-  - Hint: Wszystkie funkcje używane do edycji muszą mieć przekazywany w parametrze Dig.
-5. Dodanie formularza edycji Diga
-  - Hint: Formularz należy dodać w ramach pętli `ng-repeat` dla każdego Diga
-  - Hint: Używając zmiennej z ID aktualnie edytowanego Diga możesz wykorzystać dyrektywy `ng-show`/`ng-hide`, aby odpowiednio pokazywać/ukrywać Diga/jego formularz.
-6. Dodanie przycisku `Destroy` i wywołanie odpowiedniej akcji w controllerze Angularowym.
-
-Uwagi:
-
-- Formularze tworzenia/edycji Diga muszą posiadać pole przypisujące ID ownera. Dla uproszczenia użyjmy zwykłego pola `input type="number"`. W normalnych warunkach, oczywiście, byłby to ID aktualnie zalogowanego użytkownika.
+Tip: utwórz `before_action` gdzie sprawdzasz czy użytkownik jest zalogowany jeśli nie zwróć 403.
