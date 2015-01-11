@@ -27,7 +27,7 @@ angular.module('DigApp').controller 'DigsCtrl', ($scope, Dig, digs) ->
       $scope.digs.splice(index, 1)
 
   $scope.vote = (dig, amount) ->
-    Dig.createVote(dig, amount).success (response) ->
+    Dig.vote(dig, amount).success (response) ->
       console.log response
       dig.rating += amount
 
