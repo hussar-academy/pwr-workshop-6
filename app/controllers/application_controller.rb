@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    require'pry';binding.pry
     return @current_user if defined?(@current_user)
     @current_user = User.find_by(id: session[:current_user_id])
   end
