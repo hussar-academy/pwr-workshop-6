@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     @current_user = User.find_by(id: session[:current_user_id])
   end
 
-  def authoirze_api
+  def authorize_api
     unless current_user
       render json: { error: 'Not Authorized Access' }, status: 403
     end
