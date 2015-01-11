@@ -7,7 +7,7 @@ angular.module('DigApp').config ($stateProvider, $urlRouterProvider) ->
       controller: 'DigsCtrl'
       resolve:
         digs: (Dig) ->
-          Dig.homepage()
+          Dig.index()
       templateUrl: '/assets/index.html'
 
     .state 'dig',
