@@ -1,47 +1,54 @@
-# Przetwarzanie Formularza Railsowego
+# pry debugger
 
-Załóżmy, że chcemy dodawać Diga metodą Railsową:
-(uwaga, przykład trochę celowo nie zadziała w naszej aplikacji z powodu powodów :)
-Między innymi dlatego, że już posiadamy Controller dla `Digs` w naszym API)
+- [Strona pry'a](http://pryrepl.org/)
+- [pry na GitHubie](https://github.com/pry/pry)
+- [pry-remote](https://github.com/Mon-Ouie/pry-remote)
 
-```ruby
-#     not an API ▼
-# app/controllers/digs_controller.rb
-class DigsController < ApplicationController
-  # this renders view with form
-  def new
-  end
+# JavaScript [debugger](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger)
 
-  # process form
-  def create
-    Dig.create!(dig_params)
+# JavaScript [console.log](https://developer.mozilla.org/en-US/docs/Web/API/Console.log)
 
-    # we don't return JSON, but we can redirect user (in this case to root path)
-    redirect_to root_path
-  end
+# [Rails.logger.info](http://guides.rubyonrails.org/debugging_rails_applications.html#sending-messages)
 
-  private
-    def dig_params
-      ...
-    end
-end
+# $ tail -f | grep
 
-# config/routes.rb
-...
-get 'digs', to: 'digs#new'
-post 'digs', to 'digs#create'
-...
+- [man tail](http://unixhelp.ed.ac.uk/CGI/man-cgi?tail)
+- [Wikipedia grep](http://en.wikipedia.org/wiki/Grep)
+
+```bash
+$ tail -f log/development.log | grep HODOR
 ```
 
-```slim
-# app/views/digs/new.html.slim
-= form_tag digs_path do
-  = label_tag :title
-  = text_field_tag :title
-  br
-  = label_tag :body
-  = text_field_tag :body
-  br
-  = submit_tag 'Create'
+# [Chrome Dev Tools](https://developer.chrome.com/devtools)
+
+# $ ps
+
+- [man ps](http://unixhelp.ed.ac.uk/CGI/man-cgi?ps)
+
+```
+$ ps aux | grep rails
+
+a = show processes for all users
+u = display the process's user/owner
+x = also show processes not attached to a terminal
+```
+
+# [bash alias](http://bash.cyberciti.biz/guide/Create_and_use_aliases)
+
+# Pow / Prax
+
+- [Pow](http://pow.cx/)
+- [Prax](https://github.com/ysbaddaden/prax)
+
+# [better errors](https://github.com/charliesome/better_errors)
+
+# Git
+
+- [Basic branching and merging](http://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
+
+```bash
+$ git branch -a        # Pokaż branche lokalne i remote
+$ git checkout bug-1   # Przejdź do brancha bug-1
+$ git checkout master  # Przejdź do brancha master
 ```
 
