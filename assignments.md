@@ -9,3 +9,4 @@ Każdy branch to osobna pułapka. W każdym branchu zmieniona została tylko jed
 
 Należy doprowadzić aplikację do stanu z **mastera**, czyli po prostu sprawić, by znowu zaczęła działać ;)
 
+**UPDATE:** Teraz te branche są naprawione, aby można było podejrzeć rozwiązania. Jeśli chcesz to rozwiazać, musisz usunąć najnowszego commita na każdym bug-branchu ;)
